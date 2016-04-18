@@ -1,0 +1,25 @@
+<package>
+  <name>rqt_bag_annotation</name>
+  <version>0.1.0</version>
+  <description>rqt_bag_annotation provides a GUI plugin for displaying, replaying and annotating ROS bag files.</description>
+  <maintainer email="curranw@oregonstate.edu">William Curran</maintainer>
+
+  <license>BSD</license>
+
+  <author>William Curran</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>python-rospkg</run_depend>
+  <run_depend>rosbag</run_depend>
+  <run_depend>rosgraph_msgs</run_depend>
+  <run_depend>roslib</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend version_gte="0.2.12">rqt_gui</run_depend>
+  <run_depend>rqt_gui_py</run_depend>
+
+  <export>
+    <architecture_independent/>
+    <rqt_gui plugin="${prefix}/plugin.xml"/>
+  </export>
+</package>
