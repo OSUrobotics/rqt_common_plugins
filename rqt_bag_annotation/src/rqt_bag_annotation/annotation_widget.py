@@ -14,7 +14,7 @@ class AnnotationWidget(QWidget):
 		self.timeline_frame = timeline_frame
 		rp = rospkg.RosPack()
 		ui_file = os.path.join(rp.get_path('rqt_bag_annotation'), 'resource', 'annotation_widget.ui')
-		#self.show()
+
 		loadUi(ui_file, self)
 		self.setObjectName('AnnotationWidget')
 		rd_file = os.path.join(rp.get_path('turtlebot_description'), 'robots', 'kobuki_hexagons_kinect.urdf.xacro')

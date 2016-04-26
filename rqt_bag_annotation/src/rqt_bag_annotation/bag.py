@@ -37,7 +37,7 @@ import threading
 from qt_gui.plugin import Plugin
 
 from .bag_widget import BagWidget
-
+#from .tf_remap import 
 class Bag(Plugin):
     """
     Subclass of Plugin to provide interactive bag visualization, playing(publishing) and recording

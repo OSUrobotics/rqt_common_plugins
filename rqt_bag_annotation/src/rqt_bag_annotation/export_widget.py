@@ -61,7 +61,7 @@ class ExportWidget(QWidget):
 
 		for annotation in self._annotations:
 			start_time = annotation.x_left
-			end_time = annotation.x_right 
+			end_time = annotation.x_right
 			for time_stamp in self.drange(start_time, end_time, self._dt):
 				timestamp_to_data[time_stamp] = dict()
 				timestamp_to_data[time_stamp]['Reward'] = annotation.reward
