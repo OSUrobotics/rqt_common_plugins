@@ -1161,7 +1161,6 @@ class TimelineFrame(QGraphicsItem):
             if self._annotation_left is not None:
                 new_annotation = Annotation()
 
-
                 x_left = self._annotation_left
                 x_right = self._annotation_right
                 it = len(self._annotations)
@@ -1189,7 +1188,6 @@ class TimelineFrame(QGraphicsItem):
         dz = event.delta() / 120.0
         self.zoom_timeline(1.0 - dz * 0.2)
 
-    #Will: Here is where to add the SelectionMode reward code.
     def on_mouse_move(self, event):
         if not self._history_left:  # TODO: need a better notion of initialized
             return

@@ -159,6 +159,7 @@ class BagTimeline(QGraphicsScene):
                 self._playhead_positions_cvs[topic] = threading.Condition()
                 self._messages_cvs[topic] = threading.Condition()
                 self._message_loaders[topic] = MessageLoaderThread(self, topic)
+                self.start_publishing(topic)
 
         self._timeline_frame._start_stamp = self._get_start_stamp()
         self._timeline_frame._end_stamp = self._get_end_stamp()
@@ -193,6 +194,7 @@ class BagTimeline(QGraphicsScene):
         self._reward_widget.set_time_range([start_time, end_time])
 
         self._timeline_frame._reward_widget = self._reward_widget
+    
     def update_bags(self):
         bag_topics = self._get_topics()
 
@@ -203,6 +205,7 @@ class BagTimeline(QGraphicsScene):
                 self._playhead_positions_cvs[topic] = threading.Condition()
                 self._messages_cvs[topic] = threading.Condition()
                 self._message_loaders[topic] = MessageLoaderThread(self, topic)
+                self.start_publishing(topic)
 
         self._timeline_frame._start_stamp = self._get_start_stamp()
         self._timeline_frame._end_stamp = self._get_end_stamp()
@@ -582,8 +585,6 @@ class BagTimeline(QGraphicsScene):
     def set_annotation(self, annotation):
         self._timeline_frame.set_annotation(annotation)
 
-    def _export_annotation(self):
-        a = 1
     ### Publishing
     def is_publishing(self, topic):
         return self._player and self._player.is_publishing(topic)

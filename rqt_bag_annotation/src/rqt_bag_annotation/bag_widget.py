@@ -44,7 +44,7 @@ import rosbag
 import bag_helper
 from .bag_timeline import BagTimeline
 from .topic_selection import TopicSelection
-
+from .export_widget import ExportWidget
 
 class BagGraphicsView(QGraphicsView):
     def __init__(self, parent=None):
@@ -138,10 +138,13 @@ class BagWidget(QWidget):
         self.save_button.setEnabled(False)
         self.annotate_button.setEnabled(False)
         self.add_topic_button.setEnabled(False)
+        self.export_annotations_button.setEnabled(False)
         self._recording = False
 
         self._timeline.status_bar_changed_signal.connect(self._update_status_bar)
         self.set_status_text.connect(self._set_status_text)
+
+        self._export_widget = ExportWidget()
 
     def graphics_view_on_key_press(self, event):
         key = event.key()
@@ -300,6 +303,7 @@ class BagWidget(QWidget):
         self.annotate_button.setEnabled(True)
         self.record_button.setEnabled(False)
         self.add_topic_button.setEnabled(True)
+        self.export_annotations_button.setEnabled(True)
         self._timeline.add_bag(bag)
         qWarning("Done loading %s" % filename )
         # put the progress bar back the way it was
@@ -308,6 +312,10 @@ class BagWidget(QWidget):
         for bag in self._timeline._bags:
             for topic in bag_helper.get_topics(bag):
                 self.topics_list.addItem(topic)
+
+        self._export_widget._annotations = self._timeline._timeline_frame._annotations
+        self._export_widget._active_topics = self._timeline._active_topics
+        self._export_widget.add_bag(bag)
         #self.progress_bar.setFormat(progress_format)
         #self.progress_bar.setTextVisible(progress_text_visible) # causes a segfault :(
         #self.progress_bar.setRange(0, 100)
@@ -325,9 +333,10 @@ class BagWidget(QWidget):
         selected_topic = str(self.topics_list.currentText())
         self._timeline._active_topics.append(selected_topic)
         self._timeline.update_bags()
+        self._export_widget.update_bag()
 
     def _handle_export_annotation_clicked(self):
-        self._timeline._export_annotation()
+        self._export_widget.show()
 
     def _set_status_text(self, text):
         if text:

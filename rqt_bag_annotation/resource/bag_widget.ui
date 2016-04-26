@@ -502,7 +502,7 @@
   <customwidget>
    <class>BagGraphicsView</class>
    <extends>QGraphicsView</extends>
-   <header>rqt_bag.bag_widget</header>
+   <header>rqt_bag_annotation.bag_widget</header>
   </customwidget>
  </customwidgets>
  <resources/>
