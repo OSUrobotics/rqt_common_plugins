@@ -44,7 +44,7 @@ from .index_cache_thread import IndexCacheThread
 from .plugins.raw_view import RawView
 from .annotation_widget import AnnotationWidget
 from .annotation import Annotation
-
+from .interactive_marker_reward import RewardMarker
 class _SelectionMode(object):
     """
     SelectionMode states consolidated for readability
@@ -198,6 +198,7 @@ class TimelineFrame(QGraphicsItem):
 
         self._reward_widget = None
         self._reward_changed = False
+        self._reward_marker = RewardMarker()
     # TODO the API interface should exist entirely at the bag_timeline level. Add a "get_draw_parameters()" at the bag_timeline level to access these
     # Properties, work in progress API for plugins:
 
@@ -295,6 +296,7 @@ class TimelineFrame(QGraphicsItem):
         self._draw_topic_names(painter)
         self._draw_history_border(painter)
         self._draw_playhead(painter)
+        self._draw_reward_marker()
     # END QGraphicsItem implementation
 
     # Drawing Functions
@@ -603,6 +605,20 @@ class TimelineFrame(QGraphicsItem):
 
         painter.setBrush(self._default_brush)
         painter.setPen(self._default_pen)
+
+    def _draw_reward_marker(self):
+        px = self.map_stamp_to_x(self.playhead.to_sec())
+        found = False
+        for annotation in self._annotations:
+            x_left = self.map_stamp_to_x(annotation.x_left)
+            x_right = self.map_stamp_to_x(annotation.x_right)
+            if x_left < px and x_right > px:
+                self._reward_marker.update(annotation.reward)
+                found = True
+                break
+        if not found:
+            self._reward_marker.update(0)
+
 
     def _draw_playhead(self, painter):
         """
