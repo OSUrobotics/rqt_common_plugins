@@ -1311,6 +1311,7 @@ class TimelineFrame(QGraphicsItem):
                     elif self._selecting_mode == _SelectionMode.MOVE_RIGHT:
                         if self._annotation_on:
                             self._annotations[self._selected_annotation].x_right = x_stamp
+                            self._reward_changed = True
                         else:
                             self._selected_right = x_stamp
                         self.scene().update()
